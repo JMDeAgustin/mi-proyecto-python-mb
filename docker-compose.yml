@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    networks:
+      app_net:
+        aliases: [api]  
+    depends_on: [db, redis]
+
+  db:
+    image: postgres:16
+    networks: [app_net]
+
+  redis:
+    image: redis:7
+    networks: [app_net]
+
+networks:
+  app_net:
+    external: true    
